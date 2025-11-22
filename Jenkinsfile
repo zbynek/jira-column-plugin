@@ -4,7 +4,7 @@ pipeline {
     options {
         timestamps()
         ansiColor('xterm')
-        buildDiscarder(logRotator(numToKeepStr: '10'))
+        buildDiscarder(logRotator(numToKeepStr: '5'))
     }
 
     environment {
