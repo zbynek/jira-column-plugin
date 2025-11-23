@@ -1,0 +1,4 @@
+<?jelly escape-by-default='true'?>
+<div>
+    Column showing Jira status based on branch name
+</div>
