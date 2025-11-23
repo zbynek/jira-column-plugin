@@ -51,7 +51,7 @@ import java.util.regex.Pattern;
  */
 public class JiraColumn extends ListViewColumn {
     private static final DescriptorImpl DESCRIPTOR = new DescriptorImpl();
-    private static final JiraStatus FALLBACK = new JiraStatus("", 0, "");
+    private static final JiraStatus FALLBACK = new JiraStatus("", 0, "", "");
     private static final Pattern PATTERN = Pattern.compile("^([a-zA-Z]+-\\d+)(-.+)?$");
     private static final Map<String, JiraStatus> statuses = new HashMap<>();
     private static long lastRefresh = 0;
@@ -63,7 +63,7 @@ public class JiraColumn extends ListViewColumn {
         return DESCRIPTOR;
     }
 
-    public record JiraStatus(String name, int ordinal, String summary) { }
+    public record JiraStatus(String name, int ordinal, String summary, String className) { }
 
     private static void refresh(Job<?, ?> job) {
         List<String> keys = new ArrayList<>();
@@ -81,8 +81,9 @@ public class JiraColumn extends ListViewColumn {
                     "id in (" + String.join(",", keys) + ")");
                 for (Issue issue : issues) {
                     String name = issue.getStatus().getName();
+                    String className = List.of("In Main", "Rejected").contains(name) ? "warning" : "";
                     statuses.put(issue.getKey(), new JiraStatus(name,
-                        STATUS_ORDER.indexOf(name), issue.getSummary()));
+                        STATUS_ORDER.indexOf(name), issue.getSummary(), className));
                 }
             } catch (TimeoutException e) {
                 // oh, well

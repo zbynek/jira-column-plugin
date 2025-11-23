@@ -23,9 +23,9 @@ THE SOFTWARE.
 -->
 
 <?jelly escape-by-default='true'?>
-<j:jelly xmlns:j="jelly:core" xmlns:l="/lib/layout" xmlns:t="/lib/hudson">
+<j:jelly xmlns:j="jelly:core">
     <j:set var="status" value="${it.getJiraStatus(job)}"/>
-    <td class="jenkins-table__cell--tight jenkins-table__icon" data="${status.ordinal()}">
+    <td class="jenkins-table__cell--tight jenkins-table__icon ${status.className()}" data="${status.ordinal()}">
         <div class="jenkins-table__cell__button-wrapper" data-html-tooltip="${status.summary()}">
             ${status.name()}
         </div>
