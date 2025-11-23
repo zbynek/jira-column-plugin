@@ -1,1 +1,1 @@
-# jira-column-plugin
+# Jira Column Plugin
